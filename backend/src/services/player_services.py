@@ -7,8 +7,8 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-MODEL_PATH = BASE_DIR / "models" / "player_baseline.pkl"
-DATA_PATH = BASE_DIR / "notebooks" / "players_clean.csv"
+MODEL_PATH = "backend/models/player_baseline.pkl"
+DATA_PATH = "backend/notebooks/players_clean.csv"
 
 
 with open(MODEL_PATH, "rb") as f:
