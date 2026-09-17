@@ -21,7 +21,7 @@ scaler = data["scaler"]
 if hasattr(X, "to_numpy"):
     X = X.to_numpy()
 
-df = pd.read_csv(DATA_PATH)
+df = pd.read_csv(DATA_PATH, low_memory=False)
 
 
 def get_similar_players(player_index: int, top_k: int = 5):
