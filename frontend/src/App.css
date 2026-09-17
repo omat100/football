@@ -20,6 +20,11 @@ select {
   padding: 40px 20px;
 }
 
+
+/* =========================
+   HEADER
+   ========================= */
+
 .header {
   max-width: 1000px;
   margin: 0 auto 35px;
@@ -29,6 +34,7 @@ select {
 .header h1 {
   margin: 0;
   font-size: 36px;
+  font-weight: 700;
 }
 
 .header p {
@@ -37,10 +43,20 @@ select {
   font-size: 17px;
 }
 
+
+/* =========================
+   MAIN
+   ========================= */
+
 main {
   max-width: 1000px;
   margin: 0 auto;
 }
+
+
+/* =========================
+   SEARCH SECTION
+   ========================= */
 
 .search-section {
   background: white;
@@ -51,37 +67,70 @@ main {
 
 .search-section h2 {
   margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 24px;
 }
+
+
+/* Search controls */
 
 .search-controls {
   display: flex;
   gap: 12px;
 }
 
+
+/* Search input */
+
 .search-controls input {
   flex: 1;
   min-width: 0;
+
   padding: 13px 15px;
+
   border: 1px solid #d1d5db;
   border-radius: 7px;
+
   font-size: 16px;
+
+  outline: none;
 }
+
+.search-controls input:focus {
+  border-color: #6b7280;
+}
+
+
+/* Top K dropdown */
 
 .search-controls select {
   padding: 13px;
+
   border: 1px solid #d1d5db;
   border-radius: 7px;
+
   font-size: 16px;
+
   background: white;
+
+  cursor: pointer;
 }
+
+
+/* Search button */
 
 .search-controls button {
   padding: 13px 20px;
+
   border: none;
   border-radius: 7px;
+
   background: #111827;
   color: white;
+
   font-size: 15px;
+  font-weight: 600;
+
   cursor: pointer;
 }
 
@@ -94,16 +143,36 @@ main {
   cursor: not-allowed;
 }
 
+
+/* Error */
+
 .error-message {
-  margin-bottom: 0;
+  margin: 15px 0 0;
+
   color: #dc2626;
+
+  font-size: 14px;
 }
+
+
+/* =========================
+   LOADING
+   ========================= */
 
 .loading {
   margin-top: 30px;
+
   text-align: center;
+
   color: #6b7280;
+
+  font-size: 16px;
 }
+
+
+/* =========================
+   RESULTS
+   ========================= */
 
 .results-section {
   margin-top: 35px;
@@ -111,45 +180,173 @@ main {
 
 .results-section h2 {
   margin-bottom: 18px;
+
+  font-size: 26px;
 }
+
+
+/* Player grid */
 
 .players-grid {
   display: grid;
+
   grid-template-columns: repeat(2, 1fr);
+
   gap: 15px;
 }
 
+
+/* =========================
+   PLAYER CARD
+   ========================= */
+
 .player-card {
   display: flex;
-  align-items: center;
+
+  align-items: flex-start;
+
   background: white;
-  padding: 20px;
+
+  padding: 22px;
+
   border-radius: 10px;
+
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+
+  transition: transform 0.15s ease,
+              box-shadow 0.15s ease;
 }
+
+.player-card:hover {
+  transform: translateY(-2px);
+
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.10);
+}
+
+
+/* Ranking number */
 
 .player-rank {
   min-width: 55px;
+
   font-size: 18px;
+
   font-weight: bold;
+
   color: #6b7280;
+}
+
+
+/* Player information */
+
+.player-details {
+  flex: 1;
 }
 
 .player-details h3 {
-  margin: 0 0 8px;
-  font-size: 18px;
-}
+  margin: 0 0 12px;
 
-.player-details p {
-  margin: 0;
-  color: #6b7280;
-}
+  font-size: 19px;
 
-.player-details strong {
   color: #111827;
 }
 
+
+/* =========================
+   SIMILARITY
+   ========================= */
+
+.similarity {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  margin-bottom: 18px;
+
+  padding-bottom: 12px;
+
+  border-bottom: 1px solid #e5e7eb;
+
+  color: #6b7280;
+
+  font-size: 14px;
+}
+
+.similarity strong {
+  color: #111827;
+
+  font-size: 16px;
+}
+
+
+/* =========================
+   PLAYER DETAILS
+   ========================= */
+
+.player-info {
+  display: grid;
+
+  grid-template-columns: repeat(2, 1fr);
+
+  gap: 14px 25px;
+}
+
+
+/* Individual information */
+
+.info-item {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 4px;
+
+  font-size: 14px;
+}
+
+
+/* Label */
+
+.info-label {
+  color: #9ca3af;
+
+  font-size: 11px;
+
+  font-weight: 600;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.5px;
+}
+
+
+/* Actual value */
+
+.info-value {
+  color: #374151;
+
+  font-size: 14px;
+
+  font-weight: 500;
+}
+
+
+/* =========================
+   RESPONSIVE
+   ========================= */
+
 @media (max-width: 700px) {
+
+  .app {
+    padding: 25px 15px;
+  }
+
+  .header h1 {
+    font-size: 28px;
+  }
+
   .search-controls {
     flex-direction: column;
   }
@@ -158,7 +355,8 @@ main {
     grid-template-columns: 1fr;
   }
 
-  .header h1 {
-    font-size: 28px;
+  .player-info {
+    grid-template-columns: 1fr;
   }
+
 }

@@ -30,7 +30,8 @@ function App() {
 
       setPlayers(result);
     } catch (error) {
-      console.error(error);
+      console.error("Error fetching similar players:", error);
+
       setError(
         "Unable to get similar players. Make sure the backend is running."
       );
@@ -48,21 +49,27 @@ function App() {
   return (
     <div className="app">
 
+      {/* Header */}
       <header className="header">
         <h1>Football Player Analytics</h1>
+
         <p>
           Find players similar to your selected player
         </p>
       </header>
 
+
+      {/* Main Content */}
       <main>
 
+        {/* Search Section */}
         <section className="search-section">
 
           <h2>Find Similar Players</h2>
 
           <div className="search-controls">
 
+            {/* Player Search */}
             <input
               type="text"
               placeholder="Enter player name..."
@@ -73,6 +80,8 @@ function App() {
               onKeyDown={handleKeyDown}
             />
 
+
+            {/* Top K Selection */}
             <select
               value={topK}
               onChange={(event) =>
@@ -85,6 +94,8 @@ function App() {
               <option value={20}>Top 20</option>
             </select>
 
+
+            {/* Search Button */}
             <button
               onClick={handleSearch}
               disabled={loading}
@@ -96,6 +107,8 @@ function App() {
 
           </div>
 
+
+          {/* Error Message */}
           {error && (
             <p className="error-message">
               {error}
@@ -104,12 +117,16 @@ function App() {
 
         </section>
 
+
+        {/* Loading Message */}
         {loading && (
           <div className="loading">
             Searching for similar players...
           </div>
         )}
 
+
+        {/* Results */}
         {!loading && players.length > 0 && (
           <SimilarPlayers players={players} />
         )}

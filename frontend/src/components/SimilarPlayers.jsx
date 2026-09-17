@@ -1,3 +1,35 @@
+function formatValue(value) {
+  if (value === null || value === undefined) {
+    return "N/A";
+  }
+
+  if (value >= 1000000) {
+    return `€${(value / 1000000).toFixed(1)}M`;
+  }
+
+  if (value >= 1000) {
+    return `€${(value / 1000).toFixed(1)}K`;
+  }
+
+  return `€${value}`;
+}
+
+function formatWage(wage) {
+  if (wage === null || wage === undefined) {
+    return "N/A";
+  }
+
+  if (wage >= 1000000) {
+    return `€${(wage / 1000000).toFixed(1)}M`;
+  }
+
+  if (wage >= 1000) {
+    return `€${(wage / 1000).toFixed(1)}K`;
+  }
+
+  return `€${wage}`;
+}
+
 function SimilarPlayers({ players }) {
   if (!players || players.length === 0) {
     return null;
@@ -9,7 +41,10 @@ function SimilarPlayers({ players }) {
 
       <div className="players-grid">
         {players.map((player, index) => (
-          <div className="player-card" key={`${player.name}-${index}`}>
+          <div
+            className="player-card"
+            key={`${player.name}-${index}`}
+          >
             <div className="player-rank">
               #{index + 1}
             </div>
@@ -17,12 +52,57 @@ function SimilarPlayers({ players }) {
             <div className="player-details">
               <h3>{player.name}</h3>
 
-              <p>
-                Similarity:{" "}
+              <div className="similarity">
+                <span>Similarity</span>
+
                 <strong>
                   {(player.similarity * 100).toFixed(2)}%
                 </strong>
-              </p>
+              </div>
+
+              <div className="player-info">
+
+                <div className="info-item">
+                  <span className="info-label">
+                    Club
+                  </span>
+
+                  <span className="info-value">
+                    {player.club_name || "N/A"}
+                  </span>
+                </div>
+
+                <div className="info-item">
+                  <span className="info-label">
+                    League
+                  </span>
+
+                  <span className="info-value">
+                    {player.league_name || "N/A"}
+                  </span>
+                </div>
+
+                <div className="info-item">
+                  <span className="info-label">
+                    Market Value
+                  </span>
+
+                  <span className="info-value">
+                    {formatValue(player.value)}
+                  </span>
+                </div>
+
+                <div className="info-item">
+                  <span className="info-label">
+                    Weekly Wage
+                  </span>
+
+                  <span className="info-value">
+                    {formatWage(player.wage_eur)}
+                  </span>
+                </div>
+
+              </div>
             </div>
           </div>
         ))}
