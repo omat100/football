@@ -6,7 +6,7 @@ body {
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
   background: #f4f6f8;
-  color: #1f2937;
+  color: #17233a;
 }
 
 button,
@@ -19,7 +19,6 @@ select {
   min-height: 100vh;
   padding: 40px 20px;
 }
-
 
 /* =========================
    HEADER
@@ -35,11 +34,12 @@ select {
   margin: 0;
   font-size: 36px;
   font-weight: 700;
+  color: #10233f;
 }
 
 .header p {
   margin-top: 10px;
-  color: #6b7280;
+  color: #64748b;
   font-size: 17px;
 }
 
@@ -59,7 +59,7 @@ main {
    ========================= */
 
 .search-section {
-  background: white;
+  background: #ffffff;
   padding: 30px;
   border-radius: 12px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
@@ -69,10 +69,8 @@ main {
   margin-top: 0;
   margin-bottom: 20px;
   font-size: 24px;
+  color: #10233f;
 }
-
-
-/* Search controls */
 
 .search-controls {
   display: flex;
@@ -80,77 +78,98 @@ main {
 }
 
 
-/* Search input */
+/* =========================
+   PLAYER SEARCH INPUT
+   ========================= */
 
 .search-controls input {
   flex: 1;
   min-width: 0;
-
   padding: 13px 15px;
-
-  border: 1px solid #d1d5db;
+  border: 1px solid #cbd5e1;
   border-radius: 7px;
-
   font-size: 16px;
-
   outline: none;
+  color: #17233a;
+  background: #ffffff;
+}
+
+.search-controls input::placeholder {
+  color: #94a3b8;
 }
 
 .search-controls input:focus {
-  border-color: #6b7280;
+  border-color: #94a3b8;
 }
 
 
-/* Top K dropdown */
+/* =========================
+   TOP K SELECT
+   ========================= */
 
 .search-controls select {
   padding: 13px;
-
-  border: 1px solid #d1d5db;
+  border: 1px solid #cbd5e1;
   border-radius: 7px;
-
   font-size: 16px;
-
-  background: white;
-
+  background: #ffffff;
+  color: #17233a;
   cursor: pointer;
+  outline: none;
 }
 
 
-/* Search button */
+/* =========================
+   FIND SIMILAR PLAYERS BUTTON
+   ========================= */
 
 .search-controls button {
-  padding: 13px 20px;
-
+  padding: 13px 22px;
   border: none;
   border-radius: 7px;
 
-  background: #111827;
-  color: white;
+  /*
+    Welcoming green
+  */
+  background: #15945a;
 
+  color: #ffffff;
   font-size: 15px;
   font-weight: 600;
 
   cursor: pointer;
+
+  transition:
+    background 0.15s ease,
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
 }
 
 .search-controls button:hover {
-  background: #374151;
+  background: #117c4b;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(21, 148, 90, 0.22);
+}
+
+.search-controls button:active {
+  transform: translateY(0);
 }
 
 .search-controls button:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
 }
 
 
-/* Error */
+/* =========================
+   ERROR
+   ========================= */
 
 .error-message {
   margin: 15px 0 0;
-
   color: #dc2626;
-
   font-size: 14px;
 }
 
@@ -161,51 +180,61 @@ main {
 
 .loading {
   margin-top: 30px;
-
   text-align: center;
-
-  color: #6b7280;
-
+  color: #64748b;
   font-size: 16px;
 }
 
 
 /* =========================
-   RESULTS
+   RESULTS HEADER
    ========================= */
 
 .results-section {
   margin-top: 35px;
 }
 
-.results-section h2 {
+.results-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   margin-bottom: 18px;
+}
 
+.results-section h2 {
+  margin: 0;
   font-size: 26px;
+  color: #10233f;
+}
+
+.results-count {
+  color: #64748b;
+  font-size: 15px;
 }
 
 
-/* Player grid */
+/* =========================
+   PLAYERS GRID
+   ========================= */
 
 .players-grid {
   display: grid;
-
   grid-template-columns: repeat(2, 1fr);
-
   gap: 15px;
 }
 
 
 /* =========================
-   PLAYER CARD
+   NORMAL PLAYER CARD
    ========================= */
 
 .player-card {
-  display: flex;
+  position: relative;
 
+  display: flex;
   align-items: flex-start;
 
-  background: white;
+  background: #ffffff;
 
   padding: 22px;
 
@@ -213,42 +242,116 @@ main {
 
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
 
-  transition: transform 0.15s ease,
-              box-shadow 0.15s ease;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
 }
 
 .player-card:hover {
   transform: translateY(-2px);
 
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.10);
+  box-shadow:
+    0 5px 15px rgba(0, 0, 0, 0.10);
 }
 
 
-/* Ranking number */
+/* =========================
+   #1 BEST FIT CARD
+   ========================= */
+
+.best-fit-card {
+  background: #fffaf0;
+
+  border: 1px solid #f0b429;
+
+  box-shadow:
+    0 3px 12px rgba(212, 167, 44, 0.12);
+}
+
+.best-fit-card:hover {
+  box-shadow:
+    0 6px 18px rgba(212, 167, 44, 0.18);
+}
+
+
+/* =========================
+   BEST FIT RIBBON
+   ========================= */
+
+/*
+  The ribbon is intentionally rotated clockwise.
+
+  It sits on the top-right corner and extends
+  diagonally toward the inside of the card.
+*/
+
+.best-fit-ribbon {
+  position: absolute;
+
+  top: 16px;
+  right: -1px;
+
+  width: 125px;
+  height: 34px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #d4a72c;
+
+  color: #ffffff;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  letter-spacing: 0.5px;
+
+  transform: rotate(45deg);
+
+  transform-origin: center;
+
+  z-index: 2;
+
+  box-shadow:
+    0 2px 5px rgba(0, 0, 0, 0.12);
+}
+
+
+/* =========================
+   PLAYER RANK
+   ========================= */
 
 .player-rank {
   min-width: 55px;
 
   font-size: 18px;
-
   font-weight: bold;
 
-  color: #6b7280;
+  color: #64748b;
+}
+
+.best-fit-card .player-rank {
+  color: #a86f00;
 }
 
 
-/* Player information */
+/* =========================
+   PLAYER DETAILS
+   ========================= */
 
 .player-details {
   flex: 1;
+  min-width: 0;
 }
 
 .player-details h3 {
-  margin: 0 0 12px;
+  margin: 0 0 10px;
 
   font-size: 19px;
+  color: #10233f;
 
-  color: #111827;
+  font-weight: 700;
 }
 
 
@@ -258,31 +361,54 @@ main {
 
 .similarity {
   display: flex;
-
   justify-content: space-between;
-
   align-items: center;
 
-  margin-bottom: 18px;
+  margin-bottom: 7px;
 
-  padding-bottom: 12px;
-
-  border-bottom: 1px solid #e5e7eb;
-
-  color: #6b7280;
+  color: #64748b;
 
   font-size: 14px;
 }
 
 .similarity strong {
-  color: #111827;
-
+  color: #123d72;
   font-size: 16px;
+}
+
+.best-fit-card .similarity strong {
+  color: #a86f00;
 }
 
 
 /* =========================
-   PLAYER DETAILS
+   SIMILARITY BAR
+   ========================= */
+
+.similarity-bar {
+  width: 100%;
+  height: 7px;
+
+  margin-bottom: 20px;
+
+  background: #e2e8f0;
+
+  border-radius: 10px;
+
+  overflow: hidden;
+}
+
+.similarity-progress {
+  height: 100%;
+
+  background: #d4a72c;
+
+  border-radius: 10px;
+}
+
+
+/* =========================
+   PLAYER INFORMATION
    ========================= */
 
 .player-info {
@@ -291,14 +417,19 @@ main {
   grid-template-columns: repeat(2, 1fr);
 
   gap: 14px 25px;
+
+  padding-top: 18px;
+
+  border-top: 1px solid #e5e7eb;
 }
 
 
-/* Individual information */
+/* =========================
+   INFORMATION ITEM
+   ========================= */
 
 .info-item {
   display: flex;
-
   flex-direction: column;
 
   gap: 4px;
@@ -306,11 +437,8 @@ main {
   font-size: 14px;
 }
 
-
-/* Label */
-
 .info-label {
-  color: #9ca3af;
+  color: #94a3b8;
 
   font-size: 11px;
 
@@ -321,11 +449,8 @@ main {
   letter-spacing: 0.5px;
 }
 
-
-/* Actual value */
-
 .info-value {
-  color: #374151;
+  color: #17233a;
 
   font-size: 14px;
 
@@ -334,7 +459,7 @@ main {
 
 
 /* =========================
-   RESPONSIVE
+   MOBILE
    ========================= */
 
 @media (max-width: 700px) {
@@ -347,8 +472,22 @@ main {
     font-size: 28px;
   }
 
+  .header p {
+    font-size: 15px;
+  }
+
+  .search-section {
+    padding: 22px;
+  }
+
   .search-controls {
     flex-direction: column;
+  }
+
+  .search-controls input,
+  .search-controls select,
+  .search-controls button {
+    width: 100%;
   }
 
   .players-grid {
@@ -359,4 +498,13 @@ main {
     grid-template-columns: 1fr;
   }
 
+  .results-header {
+    align-items: flex-start;
+    gap: 8px;
+    flex-direction: column;
+  }
+
+  .best-fit-ribbon {
+    right: -12px;
+  }
 }
