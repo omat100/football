@@ -27,7 +27,11 @@ def similar_players():
     return jsonify([
         {
             "name": df.iloc[i]["long_name"],
-            "similarity": float(sims[i])
+            "value": df.iloc[i]["value_eur"],
+            "similarity": float(sims[i]),
+            "wage_eur": df.iloc[i]["wage_eur"],
+            "club_name": df.iloc[i]["club_name"],
+            "league_name": df.iloc[i]["league_name"],
         }
         for i in indices
     ])
