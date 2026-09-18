@@ -97,3 +97,73 @@ def scout_search_endpoint():
     results = emb_df.iloc[top_idx][['player_id', 'short_name', 'primary_position', 'overall', 'age'] + CORE_STATS].copy()
     results['similarity'] = sims[top_idx].cpu().numpy()
     return jsonify(results.to_dict(orient='records'))
+
+# add to scouting_routes.py
+
+@scouting_bp.route('/compare', methods=['POST'])
+def compare_players_endpoint():
+    body = request.get_json(force=True)
+    identifiers = body.get('players', [])  # now accepts names OR ids
+
+    if len(identifiers) < 2:
+        return jsonify({"error": "Provide at least 2 players (name or player_id)"}), 400
+
+    resolved_ids = []
+    errors = []
+
+    for ident in identifiers:
+        # try as player_id first (int or numeric string)
+        if isinstance(ident, int) or (isinstance(ident, str) and ident.isdigit()):
+            pid = int(ident)
+            match = emb_df[emb_df['player_id'] == pid]
+        else:
+            # name lookup — case-insensitive exact match first
+            match = emb_df[emb_df['short_name'].str.lower() == str(ident).lower()]
+            if match.empty:
+                # fallback: contains match (handles partial names)
+                match = emb_df[emb_df['short_name'].str.lower().str.contains(str(ident).lower(), na=False)]
+
+        if match.empty:
+            errors.append(f"No player found for '{ident}'")
+        elif len(match) > 1:
+            options = match['short_name'].tolist()[:5]
+            errors.append(f"'{ident}' is ambiguous, matches: {options}. Use player_id instead.")
+        else:
+            resolved_ids.append(int(match.iloc[0]['player_id']))
+
+    if errors:
+        return jsonify({"error": errors}), 404
+
+    # --- rest is same as before, using resolved_ids instead of player_ids ---
+    rows = emb_df[emb_df['player_id'].isin(resolved_ids)]
+    rows = rows.set_index('player_id').loc[resolved_ids].reset_index()
+
+    display_cols = ['player_id', 'short_name', 'primary_position', 'overall', 'age'] + CORE_STATS
+    stats_table = rows[display_cols].to_dict(orient='records')
+
+    embs = torch.tensor(rows[emb_cols].values, dtype=torch.float32).to(device)
+    embs = F.normalize(embs, dim=-1)
+    sim_matrix = (embs @ embs.T).cpu().numpy()
+
+    pairwise_similarity = []
+    for i in range(len(resolved_ids)):
+        for j in range(i + 1, len(resolved_ids)):
+            pairwise_similarity.append({
+                "player_a": rows.iloc[i]['short_name'],
+                "player_b": rows.iloc[j]['short_name'],
+                "similarity": float(sim_matrix[i][j])
+            })
+
+    biggest_differences = None
+    if len(resolved_ids) == 2:
+        diffs = {}
+        for stat in CORE_STATS + ['overall', 'age']:
+            v1, v2 = rows.iloc[0][stat], rows.iloc[1][stat]
+            diffs[stat] = float(v1 - v2)
+        biggest_differences = dict(sorted(diffs.items(), key=lambda x: -abs(x[1])))
+
+    return jsonify({
+        "players": stats_table,
+        "pairwise_similarity": pairwise_similarity,
+        "biggest_differences": biggest_differences
+    })
