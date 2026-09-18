@@ -245,13 +245,8 @@ main {
   transition:
     transform 0.15s ease,
     box-shadow 0.15s ease;
-}
 
-.player-card:hover {
-  transform: translateY(-2px);
-
-  box-shadow:
-    0 5px 15px rgba(0, 0, 0, 0.10);
+  overflow: hidden;
 }
 
 
@@ -279,20 +274,21 @@ main {
    ========================= */
 
 /*
-  The ribbon is intentionally rotated clockwise.
+  Gold diagonal ribbon positioned
+  toward the outer top-right corner.
 
-  It sits on the top-right corner and extends
-  diagonally toward the inside of the card.
+  This keeps the ribbon away from
+  the similarity percentage.
 */
 
 .best-fit-ribbon {
   position: absolute;
 
-  top: 16px;
-  right: -1px;
+  top: 17px;
+  right: -43px;
 
-  width: 125px;
-  height: 34px;
+  width: 145px;
+  height: 36px;
 
   display: flex;
   align-items: center;
@@ -305,16 +301,26 @@ main {
   font-size: 13px;
   font-weight: 700;
 
-  letter-spacing: 0.5px;
+  letter-spacing: 0.6px;
 
+  /*
+    Diagonal direction:
+    top-left → bottom-right
+  */
   transform: rotate(45deg);
 
   transform-origin: center;
 
-  z-index: 2;
+  z-index: 5;
 
   box-shadow:
     0 2px 5px rgba(0, 0, 0, 0.12);
+
+  /*
+    Prevent the ribbon from
+    interfering with mouse interaction.
+  */
+  pointer-events: none;
 }
 
 
@@ -502,9 +508,5 @@ main {
     align-items: flex-start;
     gap: 8px;
     flex-direction: column;
-  }
-
-  .best-fit-ribbon {
-    right: -12px;
   }
 }
