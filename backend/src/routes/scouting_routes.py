@@ -59,7 +59,12 @@ query_tower.load_state_dict({k.replace('query_tower.', ''): v for k, v in full_s
 query_tower.eval()
 
 emb_df = pd.read_csv('backend/notebooks/player_embeddings.csv')
+
+# Original player dataset containing club, league, value and wage
+players_df = pd.read_csv('backend/notebooks/players_clean.csv', low_memory=False)
+
 emb_cols = [c for c in emb_df.columns if c.startswith('emb_')]
+
 all_player_emb = torch.tensor(emb_df[emb_cols].values, dtype=torch.float32).to(device)
 all_player_emb = F.normalize(all_player_emb, dim=-1)
 
@@ -95,6 +100,25 @@ def scout_search_endpoint():
         top_idx = torch.topk(sims, min(top_k, sims.size(0))).indices.cpu().numpy()
 
     results = emb_df.iloc[top_idx][['player_id', 'short_name', 'primary_position', 'overall', 'age'] + CORE_STATS].copy()
+
+    metadata_cols = [
+        'player_id',
+        'long_name',
+        'club_name',
+        'league_name',
+        'value_eur',
+        'wage_eur',
+        'height_cm'
+    ]
+
+    metadata = players_df[metadata_cols].drop_duplicates(subset='player_id')
+
+    results = results.merge(
+        metadata,
+        on='player_id',
+        how='left'
+    )
+
     results['similarity'] = sims[top_idx].cpu().numpy()
     return jsonify(results.to_dict(orient='records'))
 

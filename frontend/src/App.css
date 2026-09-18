@@ -1,4 +1,4 @@
-* * {
+* {
   box-sizing: border-box;
 }
 
@@ -19,7 +19,6 @@ select {
   min-height: 100vh;
   padding: 40px 20px;
 }
-
 
 /* =========================
    HEADER
@@ -44,7 +43,6 @@ select {
   font-size: 17px;
 }
 
-
 /* =========================
    MAIN
    ========================= */
@@ -53,7 +51,6 @@ main {
   max-width: 1000px;
   margin: 0 auto;
 }
-
 
 /* =========================
    SEARCH SECTION
@@ -72,7 +69,6 @@ main {
   font-size: 24px;
   color: #10233f;
 }
-
 
 /* =========================
    SEARCH CONTROLS
@@ -108,15 +104,11 @@ main {
 .control-group select {
   width: 100%;
   padding: 13px 15px;
-
   border: 1px solid #cbd5e1;
   border-radius: 7px;
-
   font-size: 16px;
-
   background: #ffffff;
   color: #17233a;
-
   cursor: pointer;
   outline: none;
 }
@@ -124,7 +116,6 @@ main {
 .control-group select:focus {
   border-color: #15945a;
 }
-
 
 /* =========================
    DESIRED PLAYER PROFILE
@@ -153,7 +144,6 @@ main {
   color: #94a3b8;
   font-size: 13px;
 }
-
 
 /* =========================
    STAT SLIDERS
@@ -185,28 +175,23 @@ main {
 
 .stat-header span {
   min-width: 35px;
-
   text-align: right;
-
   color: #15945a;
   font-size: 15px;
   font-weight: 700;
 }
 
-
-/* RANGE INPUT */
+/* =========================
+   RANGE INPUT
+   ========================= */
 
 .stat-slider input[type="range"] {
   width: 100%;
   height: 6px;
-
   margin: 0;
-
   accent-color: #15945a;
-
   cursor: pointer;
 }
-
 
 /* =========================
    OPTIONAL FILTERS BUTTON
@@ -216,19 +201,13 @@ main {
   display: flex;
   align-items: center;
   gap: 8px;
-
   margin-top: 25px;
   padding: 0;
-
   border: none;
-
   background: transparent;
-
   color: #64748b;
-
   font-size: 14px;
   font-weight: 600;
-
   cursor: pointer;
 }
 
@@ -241,7 +220,6 @@ main {
   line-height: 1;
 }
 
-
 /* =========================
    OPTIONAL FILTERS
    ========================= */
@@ -250,12 +228,9 @@ main {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 15px;
-
   margin-top: 18px;
   padding: 20px;
-
   background: #f8fafc;
-
   border: 1px solid #e2e8f0;
   border-radius: 9px;
 }
@@ -268,28 +243,20 @@ main {
 
 .optional-item label {
   color: #64748b;
-
   font-size: 11px;
   font-weight: 600;
-
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
 .optional-item input {
   width: 100%;
-
   padding: 11px 13px;
-
   border: 1px solid #cbd5e1;
   border-radius: 7px;
-
   background: #ffffff;
-
   color: #17233a;
-
   font-size: 15px;
-
   outline: none;
 }
 
@@ -301,7 +268,6 @@ main {
   color: #94a3b8;
 }
 
-
 /* =========================
    SEARCH BUTTON
    ========================= */
@@ -309,28 +275,18 @@ main {
 .search-action {
   display: flex;
   justify-content: flex-end;
-
   margin-top: 25px;
 }
 
 .search-action button {
   padding: 13px 24px;
-
   border: none;
   border-radius: 7px;
-
-  /*
-    Welcoming green
-  */
   background: #15945a;
-
   color: #ffffff;
-
   font-size: 15px;
   font-weight: 600;
-
   cursor: pointer;
-
   transition:
     background 0.15s ease,
     transform 0.15s ease,
@@ -339,11 +295,8 @@ main {
 
 .search-action button:hover {
   background: #117c4b;
-
   transform: translateY(-1px);
-
-  box-shadow:
-    0 4px 10px rgba(21, 148, 90, 0.22);
+  box-shadow: 0 4px 10px rgba(21, 148, 90, 0.22);
 }
 
 .search-action button:active {
@@ -352,14 +305,10 @@ main {
 
 .search-action button:disabled {
   opacity: 0.6;
-
   cursor: not-allowed;
-
   transform: none;
-
   box-shadow: none;
 }
-
 
 /* =========================
    ERROR
@@ -367,12 +316,9 @@ main {
 
 .error-message {
   margin: 15px 0 0;
-
   color: #dc2626;
-
   font-size: 14px;
 }
-
 
 /* =========================
    LOADING
@@ -380,14 +326,10 @@ main {
 
 .loading {
   margin-top: 30px;
-
   text-align: center;
-
   color: #64748b;
-
   font-size: 16px;
 }
-
 
 /* =========================
    RESULTS HEADER
@@ -399,28 +341,21 @@ main {
 
 .results-header {
   display: flex;
-
   align-items: center;
-
   justify-content: space-between;
-
   margin-bottom: 18px;
 }
 
 .results-section h2 {
   margin: 0;
-
   font-size: 26px;
-
   color: #10233f;
 }
 
 .results-count {
   color: #64748b;
-
   font-size: 15px;
 }
-
 
 /* =========================
    PLAYERS GRID
@@ -428,47 +363,37 @@ main {
 
 .players-grid {
   display: grid;
-
   grid-template-columns: repeat(2, 1fr);
-
   gap: 15px;
 }
 
-
-/* =========================
-   NORMAL PLAYER CARD
-   ========================= */
+/* =========================================================
+   PLAYER CARD
+   ========================================================= */
 
 .player-card {
   position: relative;
+  display: block;
+  width: 100%;
+  overflow: hidden;
 
-  display: flex;
-
-  align-items: flex-start;
+  padding: 28px 28px 24px;
 
   background: #ffffff;
+  border: 1px solid #e2e5e8;
+  border-radius: 22px;
 
-  padding: 22px;
-
-  border-radius: 10px;
-
-  box-shadow:
-    0 2px 8px rgba(0, 0, 0, 0.07);
+  box-shadow: 0 8px 24px rgba(15, 35, 65, 0.08);
 
   transition:
-    transform 0.15s ease,
-    box-shadow 0.15s ease;
-
-  overflow: hidden;
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .player-card:hover {
   transform: translateY(-2px);
-
-  box-shadow:
-    0 5px 15px rgba(0, 0, 0, 0.10);
+  box-shadow: 0 12px 30px rgba(15, 35, 65, 0.12);
 }
-
 
 /* =========================
    #1 BEST FIT CARD
@@ -476,30 +401,17 @@ main {
 
 .best-fit-card {
   background: #fffaf0;
-
-  border: 1px solid #f0b429;
-
-  box-shadow:
-    0 3px 12px rgba(212, 167, 44, 0.12);
+  border: 1px solid #e3c878;
+  box-shadow: 0 8px 24px rgba(180, 140, 40, 0.14);
 }
 
 .best-fit-card:hover {
-  box-shadow:
-    0 6px 18px rgba(212, 167, 44, 0.18);
+  box-shadow: 0 12px 30px rgba(180, 140, 40, 0.18);
 }
-
 
 /* =========================
    BEST FIT RIBBON
    ========================= */
-
-/*
-  Gold diagonal ribbon.
-
-  Positioned toward the outer
-  top-right corner so it does
-  not cover the similarity value.
-*/
 
 .best-fit-ribbon {
   position: absolute;
@@ -511,73 +423,79 @@ main {
   height: 36px;
 
   display: flex;
-
   align-items: center;
-
   justify-content: center;
 
   background: #d4a72c;
-
   color: #ffffff;
 
   font-size: 13px;
-
   font-weight: 700;
-
   letter-spacing: 0.6px;
 
   transform: rotate(45deg);
-
   transform-origin: center;
 
   z-index: 5;
 
-  box-shadow:
-    0 2px 5px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.12);
 
   pointer-events: none;
 }
 
+/* =========================================================
+   PLAYER DETAILS CONTAINER
+   ========================================================= */
+
+.player-details {
+  width: 100%;
+  min-width: 0;
+}
 
 /* =========================
    PLAYER RANK
    ========================= */
 
-.player-rank {
-  min-width: 55px;
+.player-details .player-rank {
+  position: static;
 
-  font-size: 18px;
+  display: block;
 
-  font-weight: bold;
+  margin: 0 0 18px;
+  padding: 0;
 
-  color: #64748b;
+  color: #27344d;
+
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1;
 }
 
 .best-fit-card .player-rank {
   color: #a86f00;
 }
 
-
 /* =========================
-   PLAYER DETAILS
+   PLAYER NAME
    ========================= */
 
-.player-details {
-  flex: 1;
+.player-name {
+  display: block;
 
-  min-width: 0;
-}
+  max-width: calc(100% - 10px);
 
-.player-details h3 {
-  margin: 0 0 10px;
+  margin: 0 0 27px;
+  padding: 0;
 
-  font-size: 19px;
+  color: #0d2345;
 
-  color: #10233f;
-
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(28px, 3vw, 36px);
   font-weight: 700;
-}
 
+  line-height: 1.08;
+  letter-spacing: -0.5px;
+}
 
 /* =========================
    SIMILARITY
@@ -585,28 +503,34 @@ main {
 
 .similarity {
   display: flex;
-
+  align-items: flex-end;
   justify-content: space-between;
 
-  align-items: center;
+  margin-bottom: 9px;
 
-  margin-bottom: 7px;
-
-  color: #64748b;
-
-  font-size: 14px;
+  color: #8a8b87;
 }
 
-.similarity strong {
-  color: #123d72;
+.similarity > span {
+  color: #8a8b87;
 
-  font-size: 16px;
+  font-size: 11px;
+  font-weight: 700;
+
+  letter-spacing: 1.45px;
+  text-transform: uppercase;
 }
 
-.best-fit-card .similarity strong {
+.similarity > strong {
+  color: #b48727;
+
+  font-size: 19px;
+  font-weight: 700;
+}
+
+.best-fit-card .similarity > strong {
   color: #a86f00;
 }
-
 
 /* =========================
    SIMILARITY BAR
@@ -614,85 +538,299 @@ main {
 
 .similarity-bar {
   width: 100%;
+  height: 9px;
 
-  height: 7px;
-
-  margin-bottom: 20px;
-
-  background: #e2e8f0;
-
-  border-radius: 10px;
+  margin-bottom: 25px;
 
   overflow: hidden;
+
+  border-radius: 999px;
+
+  background: #e3e0d8;
 }
 
 .similarity-progress {
   height: 100%;
 
-  background: #d4a72c;
+  border-radius: inherit;
 
-  border-radius: 10px;
+  background: #c79a3b;
+
+  transition: width 0.4s ease;
 }
 
+/* =========================================================
+   MAIN PLAYER INFORMATION
+   ========================================================= */
 
-/* =========================
-   PLAYER INFORMATION
-   ========================= */
-
-.player-info {
+.player-main-info {
   display: grid;
+  grid-template-columns: 1fr 1fr;
 
-  grid-template-columns: repeat(2, 1fr);
+  margin-bottom: 25px;
 
-  gap: 14px 25px;
-
-  padding-top: 18px;
-
-  border-top: 1px solid #e5e7eb;
+  border-top: 1px solid #ddd5c3;
+  border-bottom: 1px solid #ddd5c3;
 }
 
-
 /* =========================
-   INFORMATION ITEM
+   METADATA BLOCK
    ========================= */
 
-.info-item {
+.meta-block {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  min-width: 0;
+  min-height: 68px;
+
+  padding: 13px 12px 13px 0;
+}
+
+.meta-block:nth-child(2),
+.meta-block:nth-child(4) {
+  padding-left: 18px;
+  border-left: 1px solid #ddd5c3;
+}
+
+.meta-block:nth-child(3),
+.meta-block:nth-child(4) {
+  border-top: 1px solid #ddd5c3;
+}
+
+/* =========================
+   METADATA ICONS
+   ========================= */
+
+.meta-icon-wrapper {
   display: flex;
 
-  flex-direction: column;
+  flex: 0 0 30px;
 
-  gap: 4px;
+  align-items: center;
+  justify-content: center;
 
-  font-size: 14px;
+  color: #b48727;
 }
 
-.info-label {
-  color: #94a3b8;
-
-  font-size: 11px;
-
-  font-weight: 600;
-
-  text-transform: uppercase;
-
-  letter-spacing: 0.5px;
+.meta-icon {
+  width: 26px;
+  height: 26px;
 }
 
-.info-value {
-  color: #17233a;
-
-  font-size: 14px;
-
-  font-weight: 500;
+.meta-block > div:last-child {
+  min-width: 0;
 }
-
 
 /* =========================
-   MOBILE
+   METADATA LABELS
    ========================= */
 
-@media (max-width: 700px) {
+.meta-block .info-label {
+  display: block;
 
+  margin-bottom: 4px;
+
+  color: #8a8b87;
+
+  font-size: 10px;
+  font-weight: 700;
+
+  letter-spacing: 1.2px;
+
+  line-height: 1.2;
+
+  text-transform: uppercase;
+}
+
+/* =========================
+   METADATA VALUES
+   ========================= */
+
+.meta-block .info-value {
+  display: block;
+
+  overflow: hidden;
+
+  color: #0d2345;
+
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 17px;
+  font-weight: 700;
+
+  line-height: 1.2;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* =========================================================
+   PLAYER DETAILS BUTTON
+   ========================================================= */
+
+.player-details-toggle {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: min(100%, 285px);
+  min-height: 48px;
+
+  margin: 2px auto 0;
+
+  padding: 10px 45px;
+
+  border: 1px solid #d7b96d;
+  border-radius: 999px;
+
+  background: rgba(255, 255, 255, 0.35);
+
+  color: #102747;
+
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 17px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.15s ease;
+}
+
+.player-details-toggle:hover {
+  background: rgba(212, 167, 44, 0.08);
+
+  border-color: #b48727;
+
+  box-shadow: 0 4px 12px rgba(180, 140, 40, 0.12);
+}
+
+.player-details-toggle:active {
+  transform: scale(0.985);
+}
+
+/* =========================
+   PLUS / MINUS
+   ========================= */
+
+.details-toggle-icon {
+  position: absolute;
+  left: 20px;
+
+  color: #b48727;
+
+  font-family: Arial, sans-serif;
+  font-size: 25px;
+  font-weight: 400;
+
+  line-height: 1;
+}
+
+/* =========================
+   CHEVRON
+   ========================= */
+
+.details-chevron {
+  position: absolute;
+  right: 18px;
+
+  color: #b48727;
+
+  font-family: Arial, sans-serif;
+  font-size: 23px;
+  font-weight: 400;
+
+  line-height: 1;
+
+  transform: rotate(0deg);
+
+  transition: transform 0.2s ease;
+}
+
+.details-chevron.chevron-up {
+  transform: rotate(-90deg);
+}
+
+/* =========================================================
+   EXPANDED PLAYER DETAILS
+   ========================================================= */
+
+.player-extra-details {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 6px 10px;
+
+  margin-top: 14px;
+
+  animation: playerDetailsOpen 0.2s ease;
+}
+
+.detail-box {
+  min-width: 0;
+
+  padding: 8px 12px 9px;
+
+  border: 1px solid #dfd1ad;
+  border-radius: 8px;
+
+  background: rgba(255, 255, 255, 0.32);
+}
+
+.detail-label {
+  display: block;
+
+  margin-bottom: 3px;
+
+  color: #7e7f7b;
+
+  font-size: 9px;
+  font-weight: 700;
+
+  letter-spacing: 1px;
+
+  line-height: 1.2;
+
+  text-transform: uppercase;
+}
+
+.detail-value {
+  display: block;
+
+  color: #102747;
+
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 18px;
+  font-weight: 700;
+
+  line-height: 1.15;
+}
+
+@keyframes playerDetailsOpen {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 700px) {
   .app {
     padding: 25px 15px;
   }
@@ -743,19 +881,75 @@ main {
     grid-template-columns: 1fr;
   }
 
-  .player-info {
-    grid-template-columns: 1fr;
-  }
-
   .results-header {
     align-items: flex-start;
-
     gap: 8px;
-
     flex-direction: column;
+  }
+
+  .player-card {
+    padding: 24px 20px 22px;
+  }
+
+  .player-details .player-rank {
+    margin-bottom: 15px;
+  }
+
+  .player-name {
+    margin-bottom: 23px;
+    font-size: 30px;
+  }
+
+  .meta-block {
+    min-height: 62px;
+    gap: 9px;
+  }
+
+  .meta-block:nth-child(2),
+  .meta-block:nth-child(4) {
+    padding-left: 12px;
+  }
+
+  .meta-icon-wrapper {
+    flex-basis: 26px;
+  }
+
+  .meta-icon {
+    width: 24px;
+    height: 24px;
+  }
+
+  .meta-block .info-value {
+    font-size: 16px;
   }
 
   .best-fit-ribbon {
     right: -43px;
+  }
+}
+
+@media (max-width: 480px) {
+  .player-main-info {
+    grid-template-columns: 1fr;
+  }
+
+  .meta-block,
+  .meta-block:nth-child(2),
+  .meta-block:nth-child(3),
+  .meta-block:nth-child(4) {
+    padding: 14px 0;
+    border-left: none;
+  }
+
+  .meta-block:nth-child(n + 2) {
+    border-top: 1px solid #ddd5c3;
+  }
+
+  .player-extra-details {
+    gap: 6px;
+  }
+
+  .detail-box {
+    padding: 8px 9px;
   }
 }
