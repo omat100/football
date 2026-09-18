@@ -1,4 +1,4 @@
-* {
+* * {
   box-sizing: border-box;
 }
 
@@ -19,6 +19,7 @@ select {
   min-height: 100vh;
   padding: 40px 20px;
 }
+
 
 /* =========================
    HEADER
@@ -72,59 +73,249 @@ main {
   color: #10233f;
 }
 
+
+/* =========================
+   SEARCH CONTROLS
+   ========================= */
+
 .search-controls {
   display: flex;
   gap: 12px;
 }
 
+.control-group {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
 
-/* =========================
-   PLAYER SEARCH INPUT
-   ========================= */
-
-.search-controls input {
+.position-control {
   flex: 1;
-  min-width: 0;
+}
+
+.top-k-control {
+  width: 180px;
+}
+
+.control-group label {
+  color: #64748b;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.control-group select {
+  width: 100%;
   padding: 13px 15px;
+
   border: 1px solid #cbd5e1;
   border-radius: 7px;
+
   font-size: 16px;
-  outline: none;
-  color: #17233a;
-  background: #ffffff;
-}
 
-.search-controls input::placeholder {
-  color: #94a3b8;
-}
-
-.search-controls input:focus {
-  border-color: #94a3b8;
-}
-
-
-/* =========================
-   TOP K SELECT
-   ========================= */
-
-.search-controls select {
-  padding: 13px;
-  border: 1px solid #cbd5e1;
-  border-radius: 7px;
-  font-size: 16px;
   background: #ffffff;
   color: #17233a;
+
   cursor: pointer;
   outline: none;
 }
 
+.control-group select:focus {
+  border-color: #15945a;
+}
+
 
 /* =========================
-   FIND SIMILAR PLAYERS BUTTON
+   DESIRED PLAYER PROFILE
    ========================= */
 
-.search-controls button {
-  padding: 13px 22px;
+.profile-section {
+  margin-top: 30px;
+  padding-top: 25px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.profile-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 22px;
+}
+
+.profile-heading h3 {
+  margin: 0;
+  font-size: 18px;
+  color: #10233f;
+}
+
+.profile-heading span {
+  color: #94a3b8;
+  font-size: 13px;
+}
+
+
+/* =========================
+   STAT SLIDERS
+   ========================= */
+
+.stat-sliders {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px 30px;
+}
+
+.stat-slider {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.stat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.stat-header label {
+  color: #475569;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.stat-header span {
+  min-width: 35px;
+
+  text-align: right;
+
+  color: #15945a;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+
+/* RANGE INPUT */
+
+.stat-slider input[type="range"] {
+  width: 100%;
+  height: 6px;
+
+  margin: 0;
+
+  accent-color: #15945a;
+
+  cursor: pointer;
+}
+
+
+/* =========================
+   OPTIONAL FILTERS BUTTON
+   ========================= */
+
+.optional-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  margin-top: 25px;
+  padding: 0;
+
+  border: none;
+
+  background: transparent;
+
+  color: #64748b;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.optional-toggle:hover {
+  color: #15945a;
+}
+
+.optional-toggle span {
+  font-size: 20px;
+  line-height: 1;
+}
+
+
+/* =========================
+   OPTIONAL FILTERS
+   ========================= */
+
+.optional-section {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+
+  margin-top: 18px;
+  padding: 20px;
+
+  background: #f8fafc;
+
+  border: 1px solid #e2e8f0;
+  border-radius: 9px;
+}
+
+.optional-item {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.optional-item label {
+  color: #64748b;
+
+  font-size: 11px;
+  font-weight: 600;
+
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.optional-item input {
+  width: 100%;
+
+  padding: 11px 13px;
+
+  border: 1px solid #cbd5e1;
+  border-radius: 7px;
+
+  background: #ffffff;
+
+  color: #17233a;
+
+  font-size: 15px;
+
+  outline: none;
+}
+
+.optional-item input:focus {
+  border-color: #15945a;
+}
+
+.optional-item input::placeholder {
+  color: #94a3b8;
+}
+
+
+/* =========================
+   SEARCH BUTTON
+   ========================= */
+
+.search-action {
+  display: flex;
+  justify-content: flex-end;
+
+  margin-top: 25px;
+}
+
+.search-action button {
+  padding: 13px 24px;
+
   border: none;
   border-radius: 7px;
 
@@ -134,6 +325,7 @@ main {
   background: #15945a;
 
   color: #ffffff;
+
   font-size: 15px;
   font-weight: 600;
 
@@ -145,20 +337,26 @@ main {
     box-shadow 0.15s ease;
 }
 
-.search-controls button:hover {
+.search-action button:hover {
   background: #117c4b;
+
   transform: translateY(-1px);
-  box-shadow: 0 4px 10px rgba(21, 148, 90, 0.22);
+
+  box-shadow:
+    0 4px 10px rgba(21, 148, 90, 0.22);
 }
 
-.search-controls button:active {
+.search-action button:active {
   transform: translateY(0);
 }
 
-.search-controls button:disabled {
+.search-action button:disabled {
   opacity: 0.6;
+
   cursor: not-allowed;
+
   transform: none;
+
   box-shadow: none;
 }
 
@@ -169,7 +367,9 @@ main {
 
 .error-message {
   margin: 15px 0 0;
+
   color: #dc2626;
+
   font-size: 14px;
 }
 
@@ -180,8 +380,11 @@ main {
 
 .loading {
   margin-top: 30px;
+
   text-align: center;
+
   color: #64748b;
+
   font-size: 16px;
 }
 
@@ -196,19 +399,25 @@ main {
 
 .results-header {
   display: flex;
+
   align-items: center;
+
   justify-content: space-between;
+
   margin-bottom: 18px;
 }
 
 .results-section h2 {
   margin: 0;
+
   font-size: 26px;
+
   color: #10233f;
 }
 
 .results-count {
   color: #64748b;
+
   font-size: 15px;
 }
 
@@ -219,7 +428,9 @@ main {
 
 .players-grid {
   display: grid;
+
   grid-template-columns: repeat(2, 1fr);
+
   gap: 15px;
 }
 
@@ -232,6 +443,7 @@ main {
   position: relative;
 
   display: flex;
+
   align-items: flex-start;
 
   background: #ffffff;
@@ -240,13 +452,21 @@ main {
 
   border-radius: 10px;
 
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.07);
 
   transition:
     transform 0.15s ease,
     box-shadow 0.15s ease;
 
   overflow: hidden;
+}
+
+.player-card:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 5px 15px rgba(0, 0, 0, 0.10);
 }
 
 
@@ -274,11 +494,11 @@ main {
    ========================= */
 
 /*
-  Gold diagonal ribbon positioned
-  toward the outer top-right corner.
+  Gold diagonal ribbon.
 
-  This keeps the ribbon away from
-  the similarity percentage.
+  Positioned toward the outer
+  top-right corner so it does
+  not cover the similarity value.
 */
 
 .best-fit-ribbon {
@@ -291,7 +511,9 @@ main {
   height: 36px;
 
   display: flex;
+
   align-items: center;
+
   justify-content: center;
 
   background: #d4a72c;
@@ -299,14 +521,11 @@ main {
   color: #ffffff;
 
   font-size: 13px;
+
   font-weight: 700;
 
   letter-spacing: 0.6px;
 
-  /*
-    Diagonal direction:
-    top-left → bottom-right
-  */
   transform: rotate(45deg);
 
   transform-origin: center;
@@ -316,10 +535,6 @@ main {
   box-shadow:
     0 2px 5px rgba(0, 0, 0, 0.12);
 
-  /*
-    Prevent the ribbon from
-    interfering with mouse interaction.
-  */
   pointer-events: none;
 }
 
@@ -332,6 +547,7 @@ main {
   min-width: 55px;
 
   font-size: 18px;
+
   font-weight: bold;
 
   color: #64748b;
@@ -348,6 +564,7 @@ main {
 
 .player-details {
   flex: 1;
+
   min-width: 0;
 }
 
@@ -355,6 +572,7 @@ main {
   margin: 0 0 10px;
 
   font-size: 19px;
+
   color: #10233f;
 
   font-weight: 700;
@@ -367,7 +585,9 @@ main {
 
 .similarity {
   display: flex;
+
   justify-content: space-between;
+
   align-items: center;
 
   margin-bottom: 7px;
@@ -379,6 +599,7 @@ main {
 
 .similarity strong {
   color: #123d72;
+
   font-size: 16px;
 }
 
@@ -393,6 +614,7 @@ main {
 
 .similarity-bar {
   width: 100%;
+
   height: 7px;
 
   margin-bottom: 20px;
@@ -436,6 +658,7 @@ main {
 
 .info-item {
   display: flex;
+
   flex-direction: column;
 
   gap: 4px;
@@ -490,9 +713,29 @@ main {
     flex-direction: column;
   }
 
-  .search-controls input,
-  .search-controls select,
-  .search-controls button {
+  .position-control,
+  .top-k-control {
+    width: 100%;
+  }
+
+  .profile-heading {
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .stat-sliders {
+    grid-template-columns: 1fr;
+  }
+
+  .optional-section {
+    grid-template-columns: 1fr;
+  }
+
+  .search-action {
+    justify-content: stretch;
+  }
+
+  .search-action button {
     width: 100%;
   }
 
@@ -506,7 +749,13 @@ main {
 
   .results-header {
     align-items: flex-start;
+
     gap: 8px;
+
     flex-direction: column;
+  }
+
+  .best-fit-ribbon {
+    right: -43px;
   }
 }
