@@ -167,3 +167,57 @@ def compare_players_endpoint():
         "pairwise_similarity": pairwise_similarity,
         "biggest_differences": biggest_differences
     })
+
+@scouting_bp.route('/pricing/<int:player_id>', methods=['GET'])
+def player_pricing_endpoint(player_id):
+    k = int(request.args.get('k', 15))
+
+    target_row = emb_df[emb_df['player_id'] == player_id]
+    if target_row.empty:
+        return jsonify({"error": f"player_id {player_id} not found"}), 404
+
+    target_idx = target_row.index[0]
+    target_emb = torch.tensor(target_row[emb_cols].values, dtype=torch.float32).to(device)
+    target_emb = F.normalize(target_emb, dim=-1)
+
+    sims = (target_emb @ all_player_emb.T).squeeze(0)
+    sims[target_idx] = -1  # exclude self
+    top_sim, top_idx = torch.topk(sims, k)
+
+    neighbors = emb_df.iloc[top_idx.cpu().numpy()].copy()
+    neighbors = neighbors[neighbors['value_eur'].notna() & (neighbors['value_eur'] > 0)]
+
+    if neighbors.empty:
+        return jsonify({"error": "No comparable priced players found"}), 404
+
+    weights = top_sim.cpu().numpy()[:len(neighbors)]
+    weights = np.clip(weights, 0, None)
+    est_value = float(np.average(neighbors['value_eur'], weights=weights))
+
+    actual_value = float(target_row.iloc[0]['value_eur']) if pd.notna(target_row.iloc[0]['value_eur']) else None
+    verdict = None
+    if actual_value:
+        pct_diff = (actual_value - est_value) / est_value * 100
+        if pct_diff > 15:
+            verdict = "overvalued"
+        elif pct_diff < -15:
+            verdict = "undervalued"
+        else:
+            verdict = "fairly valued"
+
+    comparables = neighbors[['player_id', 'short_name', 'primary_position', 'overall', 'value_eur']].copy()
+    comparables['similarity'] = weights[:len(comparables)]
+    comparables = comparables.sort_values('similarity', ascending=False)
+
+    return jsonify({
+        "player_id": player_id,
+        "short_name": target_row.iloc[0]['short_name'],
+        "actual_value_eur": actual_value,
+        "estimated_value_eur": round(est_value, 2),
+        "verdict": verdict,
+        "value_range": {
+            "min": float(neighbors['value_eur'].min()),
+            "max": float(neighbors['value_eur'].max())
+        },
+        "comparables": comparables.to_dict(orient='records')
+    })
