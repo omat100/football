@@ -1,14 +1,12 @@
 import pickle
-from pathlib import Path
 
 import pandas as pd
 from sklearn.metrics.pairwise import cosine_similarity
 
+from ..paths import BACKEND_DIR
 
-BASE_DIR = Path(__file__).resolve().parent.parent
-
-MODEL_PATH = "backend/models/player_baseline.pkl"
-DATA_PATH = "backend/notebooks/players_clean.csv"
+MODEL_PATH = BACKEND_DIR / "models" / "player_baseline.pkl"
+DATA_PATH = BACKEND_DIR / "notebooks" / "players_clean.csv"
 
 
 with open(MODEL_PATH, "rb") as f:

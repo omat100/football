@@ -1,0 +1,29 @@
+services:
+  - type: web
+    name: football-backend
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn -w 2 -b 0.0.0.0:$PORT backend.app:app
+    envVars:
+      - key: DEBUG
+        value: "false"
+      # Update this to the football-frontend URL Render gives you after its
+      # first deploy (comma-separate multiple origins if needed).
+      - key: ALLOWED_ORIGINS
+        value: https://football-frontend.onrender.com
+
+  - type: web
+    name: football-frontend
+    runtime: static
+    buildCommand: cd frontend && npm install && npm run build
+    staticPublishPath: frontend/dist
+    envVars:
+      # Update this to the football-backend URL Render gives you after its
+      # first deploy, then trigger a redeploy of this service.
+      - key: VITE_API_URL
+        value: https://football-backend.onrender.com
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html

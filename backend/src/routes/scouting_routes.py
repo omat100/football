@@ -6,6 +6,8 @@ import torch.nn as nn
 import torch.nn.functional as F
 from flask import Blueprint, request, jsonify
 
+from ..paths import BACKEND_DIR
+
 scouting_bp = Blueprint('scouting', __name__, url_prefix='/api/scouting')
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -44,7 +46,7 @@ class QueryTower(nn.Module):
         x = torch.cat([target * weight, weight, pos_e], dim=-1)
         return F.normalize(self.net(x), dim=-1)
 
-ckpt = torch.load('backend/models/two_tower_scout.pt', map_location=device)
+ckpt = torch.load(BACKEND_DIR / 'models' / 'two_tower_scout.pt', map_location=device)
 pos2idx = ckpt['pos2idx']
 stat_min = pd.Series(ckpt['stat_min'])
 stat_max = pd.Series(ckpt['stat_max'])
@@ -58,10 +60,10 @@ full_state = ckpt['model_state_dict']
 query_tower.load_state_dict({k.replace('query_tower.', ''): v for k, v in full_state.items() if k.startswith('query_tower.')})
 query_tower.eval()
 
-emb_df = pd.read_csv('backend/notebooks/player_embeddings.csv')
+emb_df = pd.read_csv(BACKEND_DIR / 'notebooks' / 'player_embeddings.csv')
 
 # Original player dataset containing club, league, value and wage
-players_df = pd.read_csv('backend/notebooks/players_clean.csv', low_memory=False)
+players_df = pd.read_csv(BACKEND_DIR / 'notebooks' / 'players_clean.csv', low_memory=False)
 
 emb_cols = [c for c in emb_df.columns if c.startswith('emb_')]
 

@@ -1,4 +1,3 @@
 /venv
 /backend/data/raw
-/backend/notebooks/players_clean.csv
-backend/notebooks/player_embeddings.csv
+.envbackend/notebooks/players_clean.csv
