@@ -1,6 +1,10 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { getPlayerPricing } from "../services/api";
 import PlayerAutocomplete from "../components/PlayerAutocomplete";
+import PlayerAvatar from "../components/PlayerAvatar";
+import ClubLogo from "../components/ClubLogo";
+import LeagueLogo from "../components/LeagueLogo";
+import { useResolvedImages } from "../hooks/useResolvedImages";
 
 function formatMoney(value) {
   if (value === null || value === undefined) {
@@ -37,6 +41,42 @@ function PricingPage() {
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
+  const clubNames = useMemo(() => {
+    if (!result) return [];
+    return [
+      ...new Set(
+        [result.club_name, ...(result.comparables || []).map((p) => p.club_name)].filter(
+          Boolean
+        )
+      ),
+    ];
+  }, [result]);
+  const leagueIds = useMemo(() => {
+    if (!result) return [];
+    return [
+      ...new Set(
+        [result.league_id, ...(result.comparables || []).map((p) => p.league_id)].filter(
+          (id) => id !== null && id !== undefined
+        )
+      ),
+    ];
+  }, [result]);
+  const playerNames = useMemo(() => {
+    if (!result) return [];
+    return [
+      ...new Set(
+        [result.short_name, ...(result.comparables || []).map((p) => p.short_name)].filter(
+          Boolean
+        )
+      ),
+    ];
+  }, [result]);
+  const images = useResolvedImages({
+    clubs: clubNames,
+    leagues: leagueIds,
+    players: playerNames,
+  });
 
   function handleQueryChange(text) {
     setPlayerQuery(text);
@@ -129,7 +169,44 @@ function PricingPage() {
           <section className="results-section">
             <div className="pricing-summary">
               <div className="pricing-summary-header">
-                <h2>{result.short_name}</h2>
+                <div className="pricing-identity">
+                  <PlayerAvatar
+                    url={images.players[result.short_name]}
+                    name={result.short_name}
+                    size={48}
+                  />
+
+                  <div>
+                    <h2>{result.short_name}</h2>
+
+                    {(result.club_name || result.league_name) && (
+                      <div className="pricing-club-league">
+                        {result.club_name && (
+                          <>
+                            <ClubLogo
+                              url={images.clubs[result.club_name]}
+                              name={result.club_name}
+                              size={18}
+                            />
+                            <span>{result.club_name}</span>
+                          </>
+                        )}
+
+                        {result.league_name && (
+                          <>
+                            <LeagueLogo
+                              url={images.leagues[result.league_id]}
+                              name={result.league_name}
+                              size={18}
+                            />
+                            <span>{result.league_name}</span>
+                          </>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                </div>
+
                 {result.verdict && (
                   <span className={verdictClass(result.verdict)}>
                     {result.verdict}
@@ -179,7 +256,16 @@ function PricingPage() {
                   <tbody>
                     {result.comparables?.map((player) => (
                       <tr key={player.player_id}>
-                        <td>{player.short_name}</td>
+                        <td>
+                          <span className="table-thumb">
+                            <PlayerAvatar
+                              url={images.players[player.short_name]}
+                              name={player.short_name}
+                              size={28}
+                            />
+                          </span>
+                          {player.short_name}
+                        </td>
                         <td>{player.primary_position ?? "N/A"}</td>
                         <td>{player.overall ?? "N/A"}</td>
                         <td>{formatMoney(player.value_eur)}</td>

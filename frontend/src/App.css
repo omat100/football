@@ -1276,3 +1276,85 @@ main {
     gap: 10px;
   }
 }
+
+/* =========================================================
+   IMAGE COMPONENTS (avatars / logos)
+   ========================================================= */
+
+.player-avatar-img {
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid #e2e5e8;
+  background: #f8fafc;
+  flex-shrink: 0;
+}
+
+.avatar-fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: linear-gradient(135deg, #15945a, #117c4b);
+  color: #ffffff;
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 700;
+}
+
+.club-logo-img,
+.league-logo-img {
+  object-fit: contain;
+  background: #ffffff;
+  border-radius: 6px;
+  border: 1px solid #e2e5e8;
+  flex-shrink: 0;
+}
+
+.player-name-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 27px;
+}
+
+.player-name-row .player-name {
+  margin-bottom: 0;
+}
+
+.table-thumb {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #f8fafc;
+  vertical-align: middle;
+  margin-right: 8px;
+}
+
+.table-inline-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pricing-identity {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.pricing-club-league {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #64748b;
+  font-size: 13px;
+  margin-top: 4px;
+}
+
+.pricing-club-league span {
+  margin-right: 10px;
+}

@@ -55,6 +55,16 @@ export async function getPlayerPricing(playerId, k) {
   return handleResponse(response);
 }
 
+export async function resolveImages({ clubs = [], leagues = [], players = [] }) {
+  const response = await fetch(`${API_URL}/api/images/resolve`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ clubs, leagues, players }),
+  });
+
+  return handleResponse(response);
+}
+
 export async function searchPlayers(query, limit = 8) {
   const params = new URLSearchParams({ q: query, limit });
   const response = await fetch(

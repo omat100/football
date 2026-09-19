@@ -1,6 +1,10 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { getSimilarPlayers } from "../services/api";
 import PlayerAutocomplete from "../components/PlayerAutocomplete";
+import PlayerAvatar from "../components/PlayerAvatar";
+import ClubLogo from "../components/ClubLogo";
+import LeagueLogo from "../components/LeagueLogo";
+import { useResolvedImages } from "../hooks/useResolvedImages";
 
 function formatMoney(value) {
   if (value === null || value === undefined) {
@@ -29,6 +33,24 @@ function SimilarPlayersPage() {
   const [players, setPlayers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
+  const clubNames = useMemo(
+    () => [...new Set(players.map((p) => p.club_name).filter(Boolean))],
+    [players]
+  );
+  const leagueIds = useMemo(
+    () => [...new Set(players.map((p) => p.league_id).filter(Boolean))],
+    [players]
+  );
+  const playerNames = useMemo(
+    () => [...new Set(players.map((p) => p.name).filter(Boolean))],
+    [players]
+  );
+  const images = useResolvedImages({
+    clubs: clubNames,
+    leagues: leagueIds,
+    players: playerNames,
+  });
 
   async function handleSearch() {
     if (!playerName.trim()) {
@@ -126,9 +148,44 @@ function SimilarPlayersPage() {
                 <tbody>
                   {players.map((player, index) => (
                     <tr key={index}>
-                      <td>{player.name}</td>
-                      <td>{player.club_name || "N/A"}</td>
-                      <td>{player.league_name || "N/A"}</td>
+                      <td>
+                        <span className="table-thumb">
+                          <PlayerAvatar
+                            url={images.players[player.name]}
+                            name={player.name}
+                            size={28}
+                          />
+                        </span>
+                        {player.name}
+                      </td>
+                      <td>
+                        {player.club_name ? (
+                          <span className="table-inline-logo">
+                            <ClubLogo
+                              url={images.clubs[player.club_name]}
+                              name={player.club_name}
+                              size={18}
+                            />
+                            {player.club_name}
+                          </span>
+                        ) : (
+                          "N/A"
+                        )}
+                      </td>
+                      <td>
+                        {player.league_name ? (
+                          <span className="table-inline-logo">
+                            <LeagueLogo
+                              url={images.leagues[player.league_id]}
+                              name={player.league_name}
+                              size={18}
+                            />
+                            {player.league_name}
+                          </span>
+                        ) : (
+                          "N/A"
+                        )}
+                      </td>
                       <td>{formatMoney(player.value)}</td>
                       <td>{formatMoney(player.wage_eur)}</td>
                       <td>{(player.similarity * 100).toFixed(2)}%</td>

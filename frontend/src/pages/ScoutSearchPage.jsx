@@ -1,6 +1,11 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { scoutSearch } from "../services/api";
 import SimilarPlayers from "../components/SimilarPlayers";
+import { useResolvedImages } from "../hooks/useResolvedImages";
+
+function uniqueNames(items, getName) {
+  return [...new Set(items.map(getName).filter(Boolean))];
+}
 
 function ScoutSearchPage() {
   const [position, setPosition] = useState("CB");
@@ -26,6 +31,28 @@ function ScoutSearchPage() {
   const [players, setPlayers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
+  const clubNames = useMemo(
+    () => uniqueNames(players, (player) => player.club_name),
+    [players]
+  );
+  const leagueIds = useMemo(
+    () => uniqueNames(players, (player) => player.league_id),
+    [players]
+  );
+  const playerNames = useMemo(
+    () =>
+      uniqueNames(
+        players,
+        (player) => player.long_name || player.short_name
+      ),
+    [players]
+  );
+  const images = useResolvedImages({
+    clubs: clubNames,
+    leagues: leagueIds,
+    players: playerNames,
+  });
 
   const positions = [
     "CAM",
@@ -516,6 +543,7 @@ function ScoutSearchPage() {
         {!loading && players.length > 0 && (
           <SimilarPlayers
             players={players}
+            images={images}
           />
         )}
 

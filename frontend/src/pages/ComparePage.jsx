@@ -1,6 +1,8 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { comparePlayers } from "../services/api";
 import PlayerAutocomplete from "../components/PlayerAutocomplete";
+import PlayerAvatar from "../components/PlayerAvatar";
+import { useResolvedImages } from "../hooks/useResolvedImages";
 
 const CORE_STATS = [
   "pace",
@@ -23,6 +25,12 @@ function ComparePage() {
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
+  const playerNames = useMemo(
+    () => [...new Set((result?.players || []).map((p) => p.short_name))],
+    [result]
+  );
+  const images = useResolvedImages({ players: playerNames });
 
   function handleIdentifierChange(index, text) {
     setIdentifiers((previous) => {
@@ -159,7 +167,16 @@ function ComparePage() {
                 <tbody>
                   {result.players.map((player) => (
                     <tr key={player.player_id}>
-                      <td>{player.short_name}</td>
+                      <td>
+                        <span className="table-thumb">
+                          <PlayerAvatar
+                            url={images.players[player.short_name]}
+                            name={player.short_name}
+                            size={28}
+                          />
+                        </span>
+                        {player.short_name}
+                      </td>
                       <td>{player.primary_position ?? "N/A"}</td>
                       <td>{player.overall ?? "N/A"}</td>
                       <td>{player.age ?? "N/A"}</td>
