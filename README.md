@@ -3,6 +3,7 @@
 A football analytics and player recommendation system built using
 Machine Learning, PyTorch, and Flask.
 
+
 The project explores football player data to identify suitable
 players based on their attributes, playing roles, and similarity
 to a given scouting requirement.
@@ -17,6 +18,9 @@ to a given scouting requirement.
 - Flask API for serving recommendations
 - Top-K player recommendations
 - Scalable backend structure for future analytics features
+
+## Backend flow
+<img width="2396" height="1969" alt="image" src="https://github.com/user-attachments/assets/7d1e9a5e-cded-4a51-ba54-eb8165eb10f8" />
 
 ## 🧠 Machine Learning
 
