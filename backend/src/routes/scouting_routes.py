@@ -106,6 +106,7 @@ def scout_search_endpoint():
         'long_name',
         'club_name',
         'league_name',
+        'league_id',
         'value_eur',
         'wage_eur',
         'height_cm'
@@ -229,13 +230,28 @@ def player_pricing_endpoint(player_id):
         else:
             verdict = "fairly valued"
 
+    club_league_cols = ['player_id', 'club_name', 'league_name', 'league_id']
+    club_league_meta = players_df[club_league_cols].drop_duplicates(subset='player_id')
+
+    def _meta_value(row, col):
+        return row[col] if pd.notna(row[col]) else None
+
+    target_meta = club_league_meta[club_league_meta['player_id'] == player_id]
+    club_name = _meta_value(target_meta.iloc[0], 'club_name') if not target_meta.empty else None
+    league_name = _meta_value(target_meta.iloc[0], 'league_name') if not target_meta.empty else None
+    league_id = _meta_value(target_meta.iloc[0], 'league_id') if not target_meta.empty else None
+
     comparables = neighbors[['player_id', 'short_name', 'primary_position', 'overall', 'value_eur']].copy()
     comparables['similarity'] = weights[:len(comparables)]
+    comparables = comparables.merge(club_league_meta, on='player_id', how='left')
     comparables = comparables.sort_values('similarity', ascending=False)
 
     return jsonify({
         "player_id": player_id,
         "short_name": target_row.iloc[0]['short_name'],
+        "club_name": club_name,
+        "league_name": league_name,
+        "league_id": league_id,
         "actual_value_eur": actual_value,
         "estimated_value_eur": round(est_value, 2),
         "verdict": verdict,

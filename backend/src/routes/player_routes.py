@@ -67,6 +67,9 @@ def similar_players():
             "wage_eur": df.iloc[i]["wage_eur"],
             "club_name": df.iloc[i]["club_name"],
             "league_name": df.iloc[i]["league_name"],
+            "league_id": (
+                df.iloc[i]["league_id"] if pd.notna(df.iloc[i]["league_id"]) else None
+            ),
         }
         for i in indices
     ])
