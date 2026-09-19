@@ -1,4 +1,4 @@
-### FOOTBALL ANALYTICS
+## FOOTBALL ANALYTICS
 
 A football analytics and player recommendation system built using
 Machine Learning, PyTorch, and Flask.
