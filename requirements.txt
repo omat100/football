@@ -1,3 +1,5 @@
+--extra-index-url https://download.pytorch.org/whl/cpu
+
 blinker==1.9.0
 click==8.5.0
 cloudpickle==3.1.2

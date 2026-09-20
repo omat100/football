@@ -7,6 +7,7 @@ import torch.nn.functional as F
 from flask import Blueprint, request, jsonify
 
 from ..paths import BACKEND_DIR
+from ..services.player_services import df as players_df
 
 scouting_bp = Blueprint('scouting', __name__, url_prefix='/api/scouting')
 
@@ -62,8 +63,9 @@ query_tower.eval()
 
 emb_df = pd.read_csv(BACKEND_DIR / 'notebooks' / 'player_embeddings.csv')
 
-# Original player dataset containing club, league, value and wage
-players_df = pd.read_csv(BACKEND_DIR / 'notebooks' / 'players_clean.csv', low_memory=False)
+# players_df (club, league, value, wage) is the same players_clean.csv already
+# loaded once by player_services.py - imported above instead of re-reading it,
+# to avoid holding two full copies of that dataframe in memory per worker.
 
 emb_cols = [c for c in emb_df.columns if c.startswith('emb_')]
 
