@@ -1,4 +1,4 @@
-const API_URL = import.meta.env.VITE_API_URL || "http://127.0.0.1:6050";
+const API_URL = import.meta.env.VITE_API_URL || "https://football-c1y0.onrender.com";
 
 async function handleResponse(response) {
   if (!response.ok) {
