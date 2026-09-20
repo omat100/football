@@ -22,7 +22,7 @@ services:
       # Update this to the football-backend URL Render gives you after its
       # first deploy, then trigger a redeploy of this service.
       - key: VITE_API_URL
-        value: https://football-backend.onrender.com
+        value: https://football-c1y0.onrender.com
     routes:
       - type: rewrite
         source: /*
