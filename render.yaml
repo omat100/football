@@ -11,7 +11,7 @@ services:
       # Update this to the football-frontend URL Render gives you after its
       # first deploy (comma-separate multiple origins if needed).
       - key: ALLOWED_ORIGINS
-        value: https://football-lake-eight.vercel.app/
+        value: https://football-lake-eight.vercel.app
 
   - type: web
     name: football-frontend
