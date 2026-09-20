@@ -1,4 +1,5 @@
 # scouting_routes.py
+import time
 import numpy as np
 import pandas as pd
 import torch
@@ -131,8 +132,16 @@ def scout_search_endpoint():
 
 @scouting_bp.route('/compare', methods=['POST'])
 def compare_players_endpoint():
+    start_time = time.monotonic()
+
+    def checkpoint(label):
+        print(f"[compare] {label} +{time.monotonic() - start_time:.3f}s", flush=True)
+
+    checkpoint("start")
+
     body = request.get_json(force=True)
     identifiers = body.get('players', [])  # now accepts names OR ids
+    checkpoint(f"parsed body ({len(identifiers)} identifiers)")
 
     if len(identifiers) < 2:
         return jsonify({"error": "Provide at least 2 players (name or player_id)"}), 400
@@ -149,8 +158,12 @@ def compare_players_endpoint():
             # name lookup — case-insensitive exact match first
             match = emb_df[emb_df['short_name'].str.lower() == str(ident).lower()]
             if match.empty:
-                # fallback: contains match (handles partial names)
-                match = emb_df[emb_df['short_name'].str.lower().str.contains(str(ident).lower(), na=False)]
+                # fallback: contains match (handles partial names); regex=False
+                # so a name with regex metacharacters can't trigger pathological
+                # backtracking or be misinterpreted as a pattern
+                match = emb_df[emb_df['short_name'].str.lower().str.contains(
+                    str(ident).lower(), na=False, regex=False
+                )]
 
         if match.empty:
             errors.append(f"No player found for '{ident}'")
@@ -159,6 +172,7 @@ def compare_players_endpoint():
             errors.append(f"'{ident}' is ambiguous, matches: {options}. Use player_id instead.")
         else:
             resolved_ids.append(int(match.iloc[0]['player_id']))
+        checkpoint(f"resolved identifier '{ident}'")
 
     if errors:
         return jsonify({"error": errors}), 404
@@ -166,13 +180,16 @@ def compare_players_endpoint():
     # --- rest is same as before, using resolved_ids instead of player_ids ---
     rows = emb_df[emb_df['player_id'].isin(resolved_ids)]
     rows = rows.set_index('player_id').loc[resolved_ids].reset_index()
+    checkpoint("built rows")
 
     display_cols = ['player_id', 'short_name', 'primary_position', 'overall', 'age'] + CORE_STATS
     stats_table = rows[display_cols].to_dict(orient='records')
+    checkpoint("built stats_table")
 
     embs = torch.tensor(rows[emb_cols].values, dtype=torch.float32).to(device)
     embs = F.normalize(embs, dim=-1)
     sim_matrix = (embs @ embs.T).cpu().numpy()
+    checkpoint("computed similarity matrix")
 
     pairwise_similarity = []
     for i in range(len(resolved_ids)):
@@ -190,6 +207,8 @@ def compare_players_endpoint():
             v1, v2 = rows.iloc[0][stat], rows.iloc[1][stat]
             diffs[stat] = float(v1 - v2)
         biggest_differences = dict(sorted(diffs.items(), key=lambda x: -abs(x[1])))
+
+    checkpoint("built pairwise_similarity + biggest_differences, returning")
 
     return jsonify({
         "players": stats_table,
