@@ -12,7 +12,7 @@ app = Flask(__name__)
 # In production, set ALLOWED_ORIGINS to a comma-separated list of the actual
 # frontend origin(s), e.g. "https://myapp.com". Defaults cover local dev.
 allowed_origins = os.environ.get(
-    "ALLOWED_ORIGINS", "http://localhost:5173,http://127.0.0.1:5173"
+    "ALLOWED_ORIGINS", "https://football-lake-eight.vercel.app/"
 ).split(",")
 CORS(app, origins=allowed_origins)
 
